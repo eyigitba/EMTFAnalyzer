@@ -28,11 +28,15 @@ void EMTFTrackInfo::Fill(const l1t::EMTFTrack & emtfTrk, const EMTFHitInfo & hit
     INSERT(mInts, "nTracksBX0", ACCESS(mInts, "nTracksBX0") + 1 );
 
   INSERT(mVFlt, "trk_pt",            emtfTrk.Pt() );
+  INSERT(mVFlt, "trk_ptUnc",         emtfTrk.NN_pt_dxy() );
+  INSERT(mVFlt, "trk_d0",            emtfTrk.NN_dxy() );
   INSERT(mVFlt, "trk_eta",           emtfTrk.Eta() );
   INSERT(mVFlt, "trk_theta",         emtfTrk.Theta() );
   INSERT(mVFlt, "trk_phi",           emtfTrk.Phi_glob() );
   INSERT(mVFlt, "trk_phi_loc",       emtfTrk.Phi_loc() );
   INSERT(mVInt, "trk_pt_int",        emtfTrk.GMT_pt() );
+  INSERT(mVInt, "trk_ptUnc_int",     emtfTrk.GMT_pt_dxy() );
+  INSERT(mVInt, "trk_d0_int",        emtfTrk.GMT_dxy() );
   INSERT(mVInt, "trk_eta_int",       emtfTrk.GMT_eta() );
   INSERT(mVInt, "trk_theta_int",     emtfTrk.Theta_fp() );
   INSERT(mVInt, "trk_phi_int",       emtfTrk.Phi_fp() );
