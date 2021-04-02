@@ -49,15 +49,14 @@
 // HLT configuration
 #include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
 
-
 class FlatNtuple : public edm::EDAnalyzer {
 
  public:
-  
+
   // Constructor/destructor
   explicit FlatNtuple(const edm::ParameterSet&);
   ~FlatNtuple();
-  
+
   // Default parameters
   const float MIN_GEN_ETA  = 1.0;
   const float MAX_GEN_ETA  = 2.5;
@@ -87,13 +86,13 @@ class FlatNtuple : public edm::EDAnalyzer {
   UnpEmuTrkDR  unpEmuTrkDR;
   SimUnpHit    simUnpHit;
   LCTSeg       lctSeg;
- 
+
   // Output tree
   TTree * out_tree;
   TTree * out_tree_meta;
- 
+
  private:
-  
+
   // Inherited from EDAnalyzer
 
   virtual void beginJob();
@@ -101,12 +100,20 @@ class FlatNtuple : public edm::EDAnalyzer {
   virtual void analyze (const edm::Event&, const edm::EventSetup&);
   virtual void endRun  (const edm::Run&,   const edm::EventSetup&);
   virtual void endJob  ();
-  
+
   // File in/out
   edm::Service<TFileService> fs;
-  
+
   // Config parameters
   bool isMC, isReco, skimTrig, skimEmtf, skimPair;
+
+  // Expert station config parameters
+  bool ignoreME0_;
+  bool ignoreGE11_;
+  bool ignoreGE21_;
+  bool ignoreRE31_;
+  bool ignoreRE41_;
+  bool ignoreDT_;
 
   // User defined settings
   std::vector<std::string> muonTriggers_;  // List of unprescale SingleMuon triggers
@@ -114,7 +121,7 @@ class FlatNtuple : public edm::EDAnalyzer {
   // HLT trigger matching
   std::vector<std::string> trigNames_;      // HLT triggers matching the desired names
   std::vector<std::string> trigModLabels_;  // HLT 3rd-to-last module label for each trigger
-  
+
   // EDM Tokens
   edm::EDGetTokenT<std::vector<reco::GenParticle>>         GenMuon_token;
   edm::EDGetTokenT<CSCSegmentCollection>                   CSCSeg_token;
@@ -128,7 +135,7 @@ class FlatNtuple : public edm::EDAnalyzer {
   edm::EDGetTokenT<std::vector<l1t::EMTFHit>>              EMTFSimHit_token;
   edm::EDGetTokenT<std::vector<l1t::EMTFTrack>>            EMTFTrack_token;
   edm::EDGetTokenT<std::vector<l1t::EMTFTrack>>            EMTFUnpTrack_token;
- 
+
   // Event counters for metadata
   int nEventsProc_, nEventsSel_;
 
