@@ -1,7 +1,9 @@
-<export>
-</export>
-<flags EDM_PLUGIN="1"/>
-<library   name="EMTFAnalyzerNTupleMaker_plugins" file="*.cc">
-  <use name="EMTFAnalyzer/NTupleMaker"/>
+<use name="EMTFAnalyzer/NTupleMaker"/>
+<library name="EMTFAnalyzerNTupleMaker_plugins" file="*.cc">
   <use name="root"/>
+  <flags EDM_PLUGIN="1"/>
 </library>
+
+<!--  <flags ADD_SUBDIR="1"/>
+  <flags ADD_SUBDIR="1"/>
+-->

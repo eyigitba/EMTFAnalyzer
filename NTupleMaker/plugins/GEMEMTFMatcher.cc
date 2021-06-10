@@ -27,7 +27,7 @@
 
 // CSC segment geometry
 #include "DataFormats/MuonDetId/interface/CSCTriggerNumbering.h"
-#include "DataFormats/L1TMuon/interface/CSCConstants.h"
+#include "DataFormats/CSCDigi/interface/CSCConstants.h"
 #include "Geometry/Records/interface/MuonGeometryRecord.h"
 #include "Geometry/GEMGeometry/interface/GEMGeometry.h"
 
@@ -363,7 +363,7 @@ GlobalPoint GEMEMTFMatcher::getGlobalPosition(unsigned int rawId, const CSCCorre
   float fractional_strip = lct.getFractionalStrip();
   // case ME1/a
   if (cscId.station() == 1 and cscId.ring() == 4 and lct.getStrip() > CSCConstants::MAX_HALF_STRIP_ME1B) {
-    fractional_strip -= CSCConstants::MAX_NUM_STRIPS_ME1B;
+    fractional_strip -= CSCConstants::NUM_STRIPS_ME1B;
   }
   // regular cases
   const auto& chamber = cscGeometry_->chamber(cscId);
