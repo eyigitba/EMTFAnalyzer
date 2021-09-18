@@ -102,24 +102,11 @@ process.FEVTDEBUGoutput = cms.OutputModule("PoolOutputModule",
 process.FEVTDEBUGoutput.outputCommands.append('keep *_simCscTriggerPrimitiveDigis*_*_*')
 process.FEVTDEBUGoutput.outputCommands.append('keep *_simEmtfDigis*_*_*')
 
-from GEMCode.GEMValidation.cscTriggerCustoms import addCSCTriggerRun3
+from EMTFAnalyzer.NTupleMaker.cscTriggerCustoms import addCSCTriggerRun3
 process = addCSCTriggerRun3(process)
 
-from GEMCode.GEMValidation.sampleProductionCustoms import dropNonMuonCollections
+from EMTFAnalyzer.NTupleMaker.sampleProductionCustoms import dropNonMuonCollections
 process = dropNonMuonCollections(process)
-
-process.SimL1Emulator = cms.Sequence(
-    process.simMuonGEMPadDigis *
-    process.simMuonGEMPadDigiClusters *
-    process.simCscTriggerPrimitiveDigis *
-    process.simCscTriggerPrimitiveDigisRun3CCLUT *
-    process.simEmtfDigis *
-    process.simEmtfDigisRun3CCLUT
-)
-
-# Additional output definition
-from GEMCode.GEMValidation.cscTriggerCustoms import dropCaloDigis
-process = dropCaloDigis(process)
 
 # Other statements
 process.mix.digitizers = cms.PSet(process.theDigitizersValid)
@@ -127,13 +114,15 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
 
 # Path and EndPath definitions
-process.digitisation_step = cms.Path(process.pdigi_valid)
+#process.digitisation_step = cms.Path(process.pdigi_valid)
 process.L1simulation_step = cms.Path(process.SimL1Emulator)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 
 # Schedule definition
-process.schedule = cms.Schedule(process.digitisation_step,process.L1simulation_step,process.endjob_step,process.FEVTDEBUGoutput_step)
+process.schedule = cms.Schedule(
+    #process.digitisation_step,
+    process.L1simulation_step,process.endjob_step,process.FEVTDEBUGoutput_step)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 
