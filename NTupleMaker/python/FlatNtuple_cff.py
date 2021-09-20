@@ -12,29 +12,30 @@ def add_analyzers_without_GEM_matching(process):
     ##   Run-3 + GEM (CCLUT and ILT on)
 
     ##   Run-2
-    FlatNtupleMCRun2 = FlatNtupleMC.clone()
-    FlatNtupleMCRun2.emtfHitTag = cms.InputTag("simEmtfDigis")
-    FlatNtupleMCRun2.emtfTrackTag = cms.InputTag("simEmtfDigis")
+    process.FlatNtupleMCRun2 = FlatNtupleMC.clone()
+    process.FlatNtupleMCRun2.emtfHitTag = cms.InputTag("simEmtfDigis")
+    process.FlatNtupleMCRun2.emtfTrackTag = cms.InputTag("simEmtfDigis")
 
     ##   Run-2 + GEM
-    FlatNtupleMCRun2GEM = FlatNtupleMC.clone()
-    FlatNtupleMCRun2GEM.emtfHitTag = cms.InputTag("simEmtfDigisILT")
-    FlatNtupleMCRun2GEM.emtfTrackTag = cms.InputTag("simEmtfDigisILT")`
+    process.FlatNtupleMCRun2GEM = FlatNtupleMC.clone()
+    process.FlatNtupleMCRun2GEM.emtfHitTag = cms.InputTag("simEmtfDigisILT")
+    process.FlatNtupleMCRun2GEM.emtfTrackTag = cms.InputTag("simEmtfDigisILT")
 
     ##   Run-3
-    FlatNtupleMCRun3.emtfHitTag = cms.InputTag("simEmtfDigisILTCCLUT")
-    FlatNtupleMCRun3.emtfTrackTag = cms.InputTag("simEmtfDigisILTCCLUT")
+    process.FlatNtupleMCRun3 = FlatNtupleMC.clone()
+    process.FlatNtupleMCRun3.emtfHitTag = cms.InputTag("simEmtfDigisILTCCLUT")
+    process.FlatNtupleMCRun3.emtfTrackTag = cms.InputTag("simEmtfDigisILTCCLUT")
 
     ##   Run-3 + GEM
-    FlatNtupleMCRun3GEM = FlatNtupleMC.clone()
-    FlatNtupleMCRun3GEM.emtfHitTag = cms.InputTag("simEmtfDigisRun3CCLUTILT")
-    FlatNtupleMCRun3GEM.emtfTrackTag = cms.InputTag("simEmtfDigisRun3CCLUTILT")
+    process.FlatNtupleMCRun3GEM = FlatNtupleMC.clone()
+    process.FlatNtupleMCRun3GEM.emtfHitTag = cms.InputTag("simEmtfDigisRun3CCLUTILT")
+    process.FlatNtupleMCRun3GEM.emtfTrackTag = cms.InputTag("simEmtfDigisRun3CCLUTILT")
 
-    EMTFAnalyzers = cms.Sequence(
-        FlatNtupleMCRun2 *
-        FlatNtupleMCRun2GEM *
-        FlatNtupleMCRun3 *
-        FlatNtupleMCRun3GEM
+    process.EMTFAnalyzers = cms.Sequence(
+        process.FlatNtupleMCRun2 *
+        process.FlatNtupleMCRun2GEM *
+        process.FlatNtupleMCRun3 *
+        process.FlatNtupleMCRun3GEM
     )
 
     process.Analysis_step = cms.Path(
@@ -82,12 +83,12 @@ def add_analyzers_with_GEM_matching(process):
     FlatNtupleMCRun3GEM.emtfHitTag = cms.InputTag("GEMEMTFMatcher")
     FlatNtupleMCRun3GEM.emtfTrackTag = cms.InputTag("GEMEMTFMatcher")
 
-    GEMEMTFMatchers = cms.Sequence(
+    process.GEMEMTFMatchers = cms.Sequence(
         GEMEMTFMatcherMCRun2 *
         GEMEMTFMatcher
     )
 
-    EMTFAnalyzers = cms.Sequence(
+    process.EMTFAnalyzers = cms.Sequence(
         FlatNtupleMCRun2 *
         FlatNtupleMCRun2GEM *
         FlatNtupleMCRun3 *
