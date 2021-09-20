@@ -28,12 +28,13 @@ process.maxEvents = cms.untracked.PSet(
 )
 
 # Input source
-process.source = cms.Source("PoolSource",
+process.source = cms.Source(
+    "PoolSource",
     dropDescendantsOfDroppedBranches = cms.untracked.bool(False),
     fileNames = cms.untracked.vstring('/store/user/mdecaro/SingleMu_Run3_Pt1to50OneOverPt_noPU_10M/CRAB3_SingleMu_Run3_Pt1to50OneOverPt_noPU_10M/210325_152507/0000/step1_85.root'),
     inputCommands = cms.untracked.vstring(
         'keep *',
-        'drop *_genParticles_*_*',
+#        'drop *_genParticles_*_*',
         'drop *_genParticlesForJets_*_*',
         'drop *_kt4GenJets_*_*',
         'drop *_kt6GenJets_*_*',
