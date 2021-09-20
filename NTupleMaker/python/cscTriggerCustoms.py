@@ -57,6 +57,8 @@ def addCSCTriggerRun3(process):
     process.simEmtfDigisRun3CCLUT = process.simEmtfDigis.clone()
     process.simEmtfDigisRun3CCLUT.CSCInput = cms.InputTag(
         'simCscTriggerPrimitiveDigisRun3CCLUT','MPCSORTED',process._Process__name)
+    process.simEmtfDigisRun3CCLUT.UseRun3CCLUT_OTMB = True
+    process.simEmtfDigisRun3CCLUT.UseRun3CCLUT_TMB = False
 
     ## Run-3 patterns with CCLUT, with ILT
     process.simCscTriggerPrimitiveDigisRun3CCLUTILT = process.simCscTriggerPrimitiveDigis.clone()
@@ -66,6 +68,8 @@ def addCSCTriggerRun3(process):
     process.simEmtfDigisRun3CCLUTILT = process.simEmtfDigis.clone()
     process.simEmtfDigisRun3CCLUTILT.CSCInput = cms.InputTag(
         'simCscTriggerPrimitiveDigisRun3CCLUTILT','MPCSORTED',process._Process__name)
+    process.simEmtfDigisRun3CCLUTILT.UseRun3CCLUT_OTMB = True
+    process.simEmtfDigisRun3CCLUTILT.UseRun3CCLUT_TMB = False
 
     ## redefine the L1-step
     process.SimL1Emulator = cms.Sequence(
