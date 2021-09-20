@@ -3,7 +3,8 @@ import FWCore.ParameterSet.Config as cms
 from EMTFAnalyzer.NTupleMaker.GEMEMTFMatcher_cfi import *
 from EMTFAnalyzer.NTupleMaker.FlatNtuple_cfi import *
 
-def add_analyzers_without_GEM_matching(process):
+def add_analyzers_without_GEM_matching(process, processName="DIGI"):
+
 
     ## collections, run 4 ntuplizers:
     ##   Run-2
@@ -13,23 +14,23 @@ def add_analyzers_without_GEM_matching(process):
 
     ##   Run-2
     process.FlatNtupleMCRun2 = FlatNtupleMC.clone()
-    process.FlatNtupleMCRun2.emtfHitTag = cms.InputTag("simEmtfDigis")
-    process.FlatNtupleMCRun2.emtfTrackTag = cms.InputTag("simEmtfDigis")
+    process.FlatNtupleMCRun2.emtfHitTag = cms.InputTag("simEmtfDigis","",processName)
+    process.FlatNtupleMCRun2.emtfTrackTag = cms.InputTag("simEmtfDigis","",processName)
 
     ##   Run-2 + GEM
     process.FlatNtupleMCRun2GEM = FlatNtupleMC.clone()
-    process.FlatNtupleMCRun2GEM.emtfHitTag = cms.InputTag("simEmtfDigisILT")
-    process.FlatNtupleMCRun2GEM.emtfTrackTag = cms.InputTag("simEmtfDigisILT")
+    process.FlatNtupleMCRun2GEM.emtfHitTag = cms.InputTag("simEmtfDigisILT","",processName)
+    process.FlatNtupleMCRun2GEM.emtfTrackTag = cms.InputTag("simEmtfDigisILT","",processName)
 
     ##   Run-3
     process.FlatNtupleMCRun3 = FlatNtupleMC.clone()
-    process.FlatNtupleMCRun3.emtfHitTag = cms.InputTag("simEmtfDigisILTCCLUT")
-    process.FlatNtupleMCRun3.emtfTrackTag = cms.InputTag("simEmtfDigisILTCCLUT")
+    process.FlatNtupleMCRun3.emtfHitTag = cms.InputTag("simEmtfDigisRun3CCLUT","",processName)
+    process.FlatNtupleMCRun3.emtfTrackTag = cms.InputTag("simEmtfDigisRun3CCLUT","",processName)
 
     ##   Run-3 + GEM
     process.FlatNtupleMCRun3GEM = FlatNtupleMC.clone()
-    process.FlatNtupleMCRun3GEM.emtfHitTag = cms.InputTag("simEmtfDigisRun3CCLUTILT")
-    process.FlatNtupleMCRun3GEM.emtfTrackTag = cms.InputTag("simEmtfDigisRun3CCLUTILT")
+    process.FlatNtupleMCRun3GEM.emtfHitTag = cms.InputTag("simEmtfDigisRun3CCLUTILT","",processName)
+    process.FlatNtupleMCRun3GEM.emtfTrackTag = cms.InputTag("simEmtfDigisRun3CCLUTILT","",processName)
 
     process.EMTFAnalyzers = cms.Sequence(
         process.FlatNtupleMCRun2 *
