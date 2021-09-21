@@ -58,8 +58,8 @@ std::vector<TString> vInt = {{
     "hit_match_iSimHit", "hit_sim_match_exact", "hit_match_iSeg", "hit_match_iSeg2", "hit_match_nSegs", "hit_seg_match_unique",
     "hit_isGEM",
 
-    "hit_strip_quart", "hit_strip_eight",
-    "hit_strip_quart_bit", "hit_strip_eight_bit",
+    "hit_strip_quart", "hit_strip_eighth",
+    "hit_strip_quart_bit", "hit_strip_eighth_bit",
     "hit_pattern_run3", "hit_slope", "hit_bend",
 
     "sim_hit_eta_int", "sim_hit_theta_int", "sim_hit_phi_int", "sim_hit_endcap", "sim_hit_sector", "sim_hit_sector_index",

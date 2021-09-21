@@ -218,7 +218,7 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
     } // End for (reco::GenParticle genMuon: *genMuons)
   }
   else if (isMC) {
-    std::cout << "ERROR: could not get genMuons from event!!!" << std::endl;
+    edm::LogError("FlatNtuple") << "ERROR: could not get genMuons from event!!!";
     return;
   }
   // Skip event if there are no GEN muons within acceptance
@@ -226,15 +226,15 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
     return;
   }
 
-  // std::cout << "About to fill EMTF hit branches" << std::endl;
   // Fill EMTF hit branches
   if ( emtfHits.isValid() ) {
+    std::cout << "About to fill EMTF hit branches" << std::endl;
     for (const l1t::EMTFHit& emtfHit: *emtfHits) {
       emtfHitInfo.Fill(emtfHit);
     } // End for (l1t::EMTFHit emtfHit: *emtfHits)
   }
   else {
-    std::cout << "ERROR: could not get emtfHits from event!!!" << std::endl;
+    edm::LogError("FlatNtuple") << "ERROR: could not get emtfHits from event!!!";
     return;
   }
 
@@ -252,9 +252,9 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
   }
   */
 
-  std::cout << "About to fill EMTF track branches" << std::endl;
   // Fill EMTF track branches
   if ( emtfTracks.isValid() ) {
+    std::cout << "About to fill EMTF track branches" << std::endl;
     for (l1t::EMTFTrack emtfTrk: *emtfTracks) {
       emtfTrackInfo.Fill(emtfTrk, emtfHitInfo);
     }
@@ -264,9 +264,8 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
     return;
   }
 
-
-  std::cout << "About to fill unpacked EMTF track branches" << std::endl;
   if (not isMC) {
+    std::cout << "About to fill unpacked EMTF track branches" << std::endl;
     // Fill Unpacked EMTF track branches
     if ( emtfUnpTracks.isValid() ) {
       for (l1t::EMTFTrack emtfTrk: *emtfUnpTracks) {

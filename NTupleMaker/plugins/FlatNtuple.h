@@ -11,7 +11,7 @@
 
 // FWCore
 #include "FWCore/ServiceRegistry/interface/Service.h"
-#include "FWCore/Framework/interface/EDAnalyzer.h"
+#include "FWCore/Framework/interface/one/EDAnalyzer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/MakerMacros.h" // Necessary for DEFINE_FWK_MODULE
 
@@ -49,7 +49,7 @@
 // HLT configuration
 #include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
 
-class FlatNtuple : public edm::EDAnalyzer {
+class FlatNtuple : public edm::one::EDAnalyzer<> {
 
  public:
 

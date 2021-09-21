@@ -46,7 +46,7 @@ namespace {
 
     //determines whether the innermost GEM copad is parallel or off-side
     int gemIO = (cscIO + abs(deltaChamber)) % 2;
-    
+
     std::cout << "run calculateGemCSCDphi for CSC "<<cscIO<<" and GEM "<<gemIO<<std::endl;
 
     //Slope correction fit values for innermost GEM to any CSC combinations

@@ -58,12 +58,8 @@ process.source = cms.Source(
 ###################
 ###  NTuplizer  ###
 ###################
-process.load('EMTFAnalyzer.NTupleMaker.FlatNtuple_cff')
-
-process.Analysis_step = cms.Path(
-    process.GEMEMTFMatchers *
-    process.EMTFAnalyzers
-)
+from EMTFAnalyzer.NTupleMaker.FlatNtuple_cff import add_analyzers_without_GEM_matching
+process = add_analyzers_without_GEM_matching(process)
 
 process.endjob_step = cms.EndPath(process.endOfProcess)
 

@@ -1,4 +1,3 @@
-
 <use name="L1Trigger/L1TMuonEndCap"/>
 <use name="MuonAnalysis/MuonAssociators"/>  <!-- For the RECO muon extrapolation -->
 <use name="HLTrigger/HLTcore"/>  <!-- For HLT muon matching -->
@@ -10,3 +9,8 @@
   <lib name="1"/>
 </export>
 <flags ADD_SUBDIR="1"/>  <!-- For the src/Branches/ subdirectory -->
+
+<!--
+ <flags ADD_SUBDIR="1"/>
+-->
+ <!-- For the src/Matchers/ subdirectory -->
