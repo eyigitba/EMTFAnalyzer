@@ -1,4 +1,3 @@
-
 <use name="L1Trigger/L1TMuonEndCap"/>
 <use name="MuonAnalysis/MuonAssociators"/>  <!-- For the RECO muon extrapolation -->
 <use name="HLTrigger/HLTcore"/>  <!-- For HLT muon matching -->
