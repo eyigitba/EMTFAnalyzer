@@ -77,9 +77,9 @@ process.generator = cms.EDProducer("FlatRandomOneOverPtGunProducer",
         MinOneOverPt = cms.double(0.001),
         MaxOneOverPt = cms.double(1.),
         PartID = cms.vint32(-13),
-        MaxEta = cms.double(2.5),
+        MaxEta = cms.double(2.4),
         MaxPhi = cms.double(3.14159265359),
-        MinEta = cms.double(-2.5),
+        MinEta = cms.double(-2.4),
         MinPhi = cms.double(-3.14159265359) ## in radians
     ),
     Verbosity = cms.untracked.int32(0), ## set to 1 (or greater)  for printouts
