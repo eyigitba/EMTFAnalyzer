@@ -28,7 +28,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('Configuration.Generator.SingleMuFlatLogPt_100MeVto2TeV_cfi')
 
 process.maxEvents = cms.untracked.PSet(
-        input = cms.untracked.int32(100)
+        input = cms.untracked.int32(1000)
 )
 
 # Input source
@@ -125,7 +125,7 @@ associatePatAlgosToolsTask(process)
 for path in process.paths:
     getattr(process,path).insert(0, process.generator)
 
-process.options.numberOfThreads = cms.untracked.uint32(1)
+process.options.numberOfThreads = cms.untracked.uint32(4)
 
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
