@@ -109,6 +109,18 @@ process = addCSCTriggerRun3(process)
 from EMTFAnalyzer.NTupleMaker.sampleProductionCustoms import dropNonMuonCollections
 process = dropNonMuonCollections(process)
 
+## drop muon collections that are not used by the L1 step (CSC local trigger or EMTF), or the analysis step
+process.FEVTDEBUGoutput.outputCommands.append('drop CSCDetIdCSCStripDigiMuonDigiCollection_simMuonCSCDigis_MuonCSCStripDigi_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop RPCDigiSimLinkedmDetSetVector_simMuonRPCDigis_RPCDigiSimLink_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop GEMDigiSimLinkedmDetSetVector_simMuonGEMDigis_GEM_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop StripDigiSimLinkedmDetSetVector_simMuonCSCDigis_MuonCSCStripDigiSimLinks_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop StripDigiSimLinkedmDetSetVector_simMuonCSCDigis_MuonCSCWireDigiSimLinks_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop PSimHits_g4SimHits_MuonCSCHits_SIM')
+process.FEVTDEBUGoutput.outputCommands.append('drop edmRandomEngineStates_randomEngineStateProducer__SIM')
+process.FEVTDEBUGoutput.outputCommands.append('drop edmRandomEngineStates_randomEngineStateProducer__DIGI')
+process.FEVTDEBUGoutput.outputCommands.append('drop SimTracks_g4SimHits__SIM')
+process.FEVTDEBUGoutput.outputCommands.append('drop SimVertexs_g4SimHits__SIM')
+
 # Other statements
 process.mix.digitizers = cms.PSet(process.theDigitizersValid)
 from Configuration.AlCa.GlobalTag import GlobalTag
