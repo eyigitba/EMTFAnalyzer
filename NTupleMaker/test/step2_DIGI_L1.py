@@ -31,7 +31,7 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source(
     "PoolSource",
     dropDescendantsOfDroppedBranches = cms.untracked.bool(False),
-    fileNames = cms.untracked.vstring('/store/user/mdecaro/SingleMu_Run3_Pt1to50OneOverPt_noPU_10M/CRAB3_SingleMu_Run3_Pt1to50OneOverPt_noPU_10M/210325_152507/0000/step1_85.root'),
+    fileNames = cms.untracked.vstring('/store/user/dildick/SingleMu/SingleMuFlatOneOverPt1To1000GeV_GEN_SIM_v2/210930_220550/0000/step1_1.root'),
     inputCommands = cms.untracked.vstring(
         'keep *',
 #        'drop *_genParticles_*_*',
@@ -109,26 +109,39 @@ process = addCSCTriggerRun3(process)
 from EMTFAnalyzer.NTupleMaker.sampleProductionCustoms import dropNonMuonCollections
 process = dropNonMuonCollections(process)
 
+## drop muon collections that are not used by the L1 step (CSC local trigger or EMTF), or the analysis step
+process.FEVTDEBUGoutput.outputCommands.append('drop CSCDetIdCSCStripDigiMuonDigiCollection_simMuonCSCDigis_MuonCSCStripDigi_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop RPCDigiSimLinkedmDetSetVector_simMuonRPCDigis_RPCDigiSimLink_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop GEMDigiSimLinkedmDetSetVector_simMuonGEMDigis_GEM_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop StripDigiSimLinkedmDetSetVector_simMuonCSCDigis_MuonCSCStripDigiSimLinks_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop StripDigiSimLinkedmDetSetVector_simMuonCSCDigis_MuonCSCWireDigiSimLinks_*')
+process.FEVTDEBUGoutput.outputCommands.append('drop PSimHits_g4SimHits_MuonCSCHits_SIM')
+process.FEVTDEBUGoutput.outputCommands.append('drop edmRandomEngineStates_randomEngineStateProducer__SIM')
+process.FEVTDEBUGoutput.outputCommands.append('drop edmRandomEngineStates_randomEngineStateProducer__DIGI')
+process.FEVTDEBUGoutput.outputCommands.append('drop SimTracks_g4SimHits__SIM')
+process.FEVTDEBUGoutput.outputCommands.append('drop SimVertexs_g4SimHits__SIM')
+
 # Other statements
 process.mix.digitizers = cms.PSet(process.theDigitizersValid)
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:phase1_2021_realistic', '')
 
 # Path and EndPath definitions
-#process.digitisation_step = cms.Path(process.pdigi_valid)
+process.digitisation_step = cms.Path(process.pdigi_valid)
 process.L1simulation_step = cms.Path(process.SimL1Emulator)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.FEVTDEBUGoutput_step = cms.EndPath(process.FEVTDEBUGoutput)
 
 # Schedule definition
 process.schedule = cms.Schedule(
-    #process.digitisation_step,
+    process.digitisation_step,
     process.L1simulation_step,process.endjob_step,process.FEVTDEBUGoutput_step)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 
 
 # Customisation from command line
+process.options.numberOfThreads = cms.untracked.uint32(4)
 
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
