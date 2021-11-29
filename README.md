@@ -24,6 +24,9 @@ In the `python` directory are the actual NTuple process definitions.
 
 In the `test` directory are where the crab configurations and PSets are for the jobs.
 
+## Code
+The EMTFAnalyzer analyzes EDM collections and dumps them into flat ntuples. It also makes links between EMTFTracks and EMTFHits through indices. The EMTFAnalyzer was updated by Sven to take into account GEM hits from GE1/1 for Run-3. And it was also updated for Run-3 CSC trigger primitives when the CCLUT algorithm is set in OTMBs and/or TMBs.
+
 ## Steps for Generating NTuples
 1.) The first step to generating NTuples for BDT Training is to generate a MC sample. This is done using `NTupleMaker/test/crab_SingleMuFlatOneOverPt1To1000GeV_GEN_SIM.py` which will get saved to EOS - this step is only the generation and simuluation of the MC. 
 
