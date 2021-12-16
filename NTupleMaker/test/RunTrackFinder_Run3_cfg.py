@@ -38,6 +38,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.EventContent.EventContent_cff')
 process.load("EventFilter.CSCRawToDigi.cscUnpacker_cfi")
 process.load('EventFilter.GEMRawToDigi.muonGEMDigis_cfi')
+process.load("L1Trigger.L1TMuonEndCap.simEmtfDigis_cfi")
 process.load('EventFilter.L1TRawToDigi.emtfStage2Digis_cfi')
 process.load("L1Trigger.CSCTriggerPrimitives.cscTriggerPrimitiveDigis_cfi")
 process.load("CalibMuon.CSCCalibration.CSCL1TPLookupTableEP_cff")
@@ -78,6 +79,7 @@ if not options.mc or options.unpack:
 
 ## l1 emulator
 l1csc = process.cscTriggerPrimitiveDigis
+l1emtf = process.simEmtfDigis
 if options.l1:
       l1csc.commonParam.runCCLUT_OTMB = cms.bool(options.runCCLUTOTMB)
       l1csc.commonParam.runCCLUT_TMB = cms.bool(options.runCCLUTTMB)
@@ -121,7 +123,7 @@ if options.dropNonMuonCollections:
 process.unpacksequence = cms.Sequence(process.muonCSCDigis)
 process.p1 = cms.Path(process.unpacksequence)
 
-process.l1sequence = cms.Sequence(l1csc)
+process.l1sequence = cms.Sequence(l1csc + l1emtf)
 process.p2 = cms.Path(process.l1sequence)
 
 process.p5 = cms.EndPath(process.output)
