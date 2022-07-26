@@ -6,9 +6,9 @@
 
 // Constructor
 FlatNtuple::FlatNtuple(const edm::ParameterSet& iConfig):
-  nEventsProc_(0), nEventsSel_(0),
-  muProp1st_(iConfig.getParameter<edm::ParameterSet>("muProp1st")), // Propagate RECO muon coordinates to 1st muon station
-  muProp2nd_(iConfig.getParameter<edm::ParameterSet>("muProp2nd"))  // Propagate RECO muon coordinates to 2nd muon station
+  nEventsProc_(0), nEventsSel_(0)
+  // muProp1st_(iConfig.getParameter<edm::ParameterSet>("muProp1st")), // Propagate RECO muon coordinates to 1st muon station
+  // muProp2nd_(iConfig.getParameter<edm::ParameterSet>("muProp2nd"))  // Propagate RECO muon coordinates to 2nd muon station
 {
   // Output file
   edm::Service<TFileService> fs;
@@ -47,6 +47,8 @@ FlatNtuple::FlatNtuple(const edm::ParameterSet& iConfig):
   EMTFSimHit_token   = consumes<std::vector<l1t::EMTFHit>>   (iConfig.getParameter<edm::InputTag>("emtfSimHitTag"));
   EMTFTrack_token    = consumes<std::vector<l1t::EMTFTrack>> (iConfig.getParameter<edm::InputTag>("emtfTrackTag"));
   EMTFUnpTrack_token = consumes<std::vector<l1t::EMTFTrack>> (iConfig.getParameter<edm::InputTag>("emtfUnpTrackTag"));
+
+  cscGeomToken_ = esConsumes<CSCGeometry, MuonGeometryRecord>();
 
 } // End FlatNtuple::FlatNtuple
 
@@ -134,8 +136,8 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
   edm::Handle<std::vector<l1t::EMTFTrack>> emtfUnpTracks;
   iEvent.getByToken(EMTFUnpTrack_token, emtfUnpTracks);
 
-  edm::ESHandle<CSCGeometry> cscGeom;
-  iSetup.get<MuonGeometryRecord>().get(cscGeom);
+  cscGeom_ = iSetup.getHandle(cscGeomToken_);
+
 
   // Reset branch values
   eventInfo.Reset();
@@ -172,7 +174,7 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
   // Fill CSC segment info
   if ( isReco && cscSegs.isValid() ) {
     for (CSCSegmentCollection::const_iterator iter = cscSegs->begin(); iter != cscSegs->end(); iter++) {
-      cscSegInfo.Fill(*iter, cscGeom);
+      cscSegInfo.Fill(*iter, cscGeom_);
     }
   }
   else if (isReco) {
@@ -182,16 +184,16 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
   // std::cout << "About to fill RECO muon info" << std::endl;
   // Fill RECO muon info
-  if ( isReco && recoMuons.isValid() && recoVertices.isValid() && trigEvent.isValid() ) {
-    // Set up muon propagator for this event
-    muProp1st_.init(iSetup);
-    muProp2nd_.init(iSetup);
-    // Loop over RECO muons
-    for ( reco::MuonCollection::const_iterator mu = recoMuons->begin(); mu != recoMuons->end(); ++mu ) {
-      recoMuonInfo.Fill( *mu, (*recoVertices)[0], recoBeamSpot, trigEvent, trigModLabels_,
-			 muProp1st_, muProp2nd_, MIN_RECO_ETA, MAX_RECO_ETA );
-    }
-  }
+  // if ( isReco && recoMuons.isValid() && recoVertices.isValid() && trigEvent.isValid() ) {
+  //   // Set up muon propagator for this event
+  //   muProp1st_.init(iSetup);
+  //   muProp2nd_.init(iSetup);
+  //   // Loop over RECO muons
+  //   for ( reco::MuonCollection::const_iterator mu = recoMuons->begin(); mu != recoMuons->end(); ++mu ) {
+  //     recoMuonInfo.Fill( *mu, (*recoVertices)[0], recoBeamSpot, trigEvent, trigModLabels_,
+		// 	 muProp1st_, muProp2nd_, MIN_RECO_ETA, MAX_RECO_ETA );
+  //   }
+  // }
   else if (isReco) {
     std::cout << "ERROR: could not get recoMuons, recoVertices, or trigEvent from event!!!" << std::endl;
     std::cout << "recoMuons = " << recoMuons.isValid() << ", recoVertices = " << recoVertices.isValid()
@@ -228,7 +230,7 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
   // Fill EMTF hit branches
   if ( emtfHits.isValid() ) {
-    std::cout << "About to fill EMTF hit branches" << std::endl;
+    // std::cout << "About to fill EMTF hit branches" << std::endl;
     for (const l1t::EMTFHit& emtfHit: *emtfHits) {
       emtfHitInfo.Fill(emtfHit);
     } // End for (l1t::EMTFHit emtfHit: *emtfHits)
@@ -254,7 +256,7 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
   // Fill EMTF track branches
   if ( emtfTracks.isValid() ) {
-    std::cout << "About to fill EMTF track branches" << std::endl;
+    // std::cout << "About to fill EMTF track branches" << std::endl;
     for (l1t::EMTFTrack emtfTrk: *emtfTracks) {
       emtfTrackInfo.Fill(emtfTrk, emtfHitInfo);
     }
@@ -265,7 +267,7 @@ void FlatNtuple::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
   }
 
   if (not isMC) {
-    std::cout << "About to fill unpacked EMTF track branches" << std::endl;
+    // std::cout << "About to fill unpacked EMTF track branches" << std::endl;
     // Fill Unpacked EMTF track branches
     if ( emtfUnpTracks.isValid() ) {
       for (l1t::EMTFTrack emtfTrk: *emtfUnpTracks) {

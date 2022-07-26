@@ -31,7 +31,7 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source(
     "PoolSource",
     dropDescendantsOfDroppedBranches = cms.untracked.bool(False),
-    fileNames = cms.untracked.vstring('/store/user/dildick/SingleMu/SingleMuFlatOneOverPt1To1000GeV_GEN_SIM_v2/210930_220550/0000/step1_1.root'),
+    fileNames = cms.untracked.vstring('root:///afs/cern.ch/user/e/eyigitba/L1T_dev/CMSSW_12_3_0_pre4_BDT/src/step1.root'),
     inputCommands = cms.untracked.vstring(
         'keep *',
 #        'drop *_genParticles_*_*',
@@ -74,7 +74,7 @@ process.options = cms.untracked.PSet(
     numberOfConcurrentLuminosityBlocks = cms.untracked.uint32(1),
     numberOfConcurrentRuns = cms.untracked.uint32(1),
     numberOfStreams = cms.untracked.uint32(0),
-    numberOfThreads = cms.untracked.uint32(2),
+    numberOfThreads = cms.untracked.uint32(8),
     printDependencies = cms.untracked.bool(False),
     sizeOfStackForThreadsInKB = cms.optional.untracked.uint32,
     throwIfIllegalParameter = cms.untracked.bool(True),
@@ -141,7 +141,7 @@ associatePatAlgosToolsTask(process)
 
 
 # Customisation from command line
-process.options.numberOfThreads = cms.untracked.uint32(4)
+process.options.numberOfThreads = cms.untracked.uint32(8)
 
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete

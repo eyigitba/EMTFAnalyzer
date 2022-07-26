@@ -51,7 +51,7 @@ readFiles = cms.untracked.vstring()
 process.source = cms.Source(
     'PoolSource',
     fileNames = cms.untracked.vstring(
-        '/store/user/dildick/SingleMu_Run3_Pt1to50OneOverPt_noPU_10M/crab_SingleMu_Run3_Pt1to50OneOverPt_noPU_10M_DIGI_L1_20210408_v1/210409_033352/0000/step2_1-1.root'
+        'root:///afs/cern.ch/user/e/eyigitba/L1T_dev/CMSSW_12_3_0_pre4_BDT/src/step2.root'
     ),
 )
 

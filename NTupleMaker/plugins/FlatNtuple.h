@@ -43,7 +43,7 @@
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
 
 // RECO muon track extrapolation
-#include "MuonAnalysis/MuonAssociators/interface/PropagateToMuon.h"
+// #include "MuonAnalysis/MuonAssociators/interface/PropagateToMuon.h"
 #include "TrackingTools/TrajectoryState/interface/TrajectoryStateOnSurface.h"
 
 // HLT configuration
@@ -136,11 +136,14 @@ class FlatNtuple : public edm::one::EDAnalyzer<> {
   edm::EDGetTokenT<std::vector<l1t::EMTFTrack>>            EMTFTrack_token;
   edm::EDGetTokenT<std::vector<l1t::EMTFTrack>>            EMTFUnpTrack_token;
 
+  edm::ESGetToken<CSCGeometry, MuonGeometryRecord> cscGeomToken_;
+  edm::ESHandle<CSCGeometry> cscGeom_;
+
   // Event counters for metadata
   int nEventsProc_, nEventsSel_;
 
-  PropagateToMuon muProp1st_;
-  PropagateToMuon muProp2nd_;
+  // PropagateToMuon muProp1st_;
+  // PropagateToMuon muProp2nd_;
 
   HLTConfigProvider hltConfig_;
 }; // End class FlatNtuple public edm::EDAnalyzer

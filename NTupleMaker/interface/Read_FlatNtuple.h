@@ -11,7 +11,7 @@ std::vector<TString> ints = {{
     "nUnpTracks", "nUnpTracksBX0",
     "nRecoMuons", "nRecoMuonsFwd", "nRecoMuonsTrig", "nRecoMuonsTrigCen",
     "nRecoPairs", "nRecoPairsFwd",
-    // "nGenMuons",
+    "nGenMuons",
   }};
 
 std::vector<TString> longs = {{
@@ -48,7 +48,7 @@ std::vector<TString> vFlt = {{
     "recoPair_dR_St1", "recoPair_dEta_St1", "recoPair_dTheta_St1", "recoPair_dPhi_St1",
     "recoPair_dR_St2", "recoPair_dEta_St2", "recoPair_dTheta_St2", "recoPair_dPhi_St2",
 
-    // "mu_pt", "mu_eta", "mu_theta", "mu_phi",
+    "mu_pt", "mu_eta", "mu_theta", "mu_phi",
   }};
 
 std::vector<TString> vInt = {{
@@ -96,7 +96,7 @@ std::vector<TString> vInt = {{
 
     "recoPair_iReco1", "recoPair_iReco2",
 
-    // "mu_charge"
+    "mu_charge"
   }};
 
 std::vector<TString> vvInt = {{
@@ -135,6 +135,14 @@ inline void SetBranchAddresses(TChain* this_chain) {
   for (auto & str : vvInt) this_chain->SetBranchAddress( str, &mVVInt.at(str) );
 }
 
+// Set branch addresses for the TTree
+inline void SetBranchAddresses(TTree* this_tree) {
+  for (auto & str : ints)  this_tree->SetBranchAddress( str, &mInts .at(str) );
+  for (auto & str : longs) this_tree->SetBranchAddress( str, &mLongs.at(str) );
+  for (auto & str : vFlt)  this_tree->SetBranchAddress( str, &mVFlt .at(str) );
+  for (auto & str : vInt)  this_tree->SetBranchAddress( str, &mVInt .at(str) );
+  for (auto & str : vvInt) this_tree->SetBranchAddress( str, &mVVInt.at(str) );
+}
 
 // Return the value of a variable corresponding to a string
 inline long long I(TString str) {
